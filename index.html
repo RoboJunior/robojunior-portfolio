@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Jeyaraman - AI/Backend Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --bg-dark: #1a1a2e;
+            --bg-medium: #16213e;
+            --bg-light: #0f3460;
+            --text-light: #ffffff;
+            --text-muted: #a0aec0;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover-bg: rgba(255, 255, 255, 0.08);
+            --border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-medium) 50%, var(--bg-light) 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--secondary-color); }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2; opacity: 0.1;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5em;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--primary-color); }
+
+        .hero {
+            padding: 140px 0 80px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* NEW: Profile Picture Styling */
+        .profile-picture {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            margin-bottom: 30px;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 3.2em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p.subtitle {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+        
+        .hero-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 0;
+            width: 70px; height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            border-left: 3px solid var(--border-color);
+        }
+
+        .timeline-item { position: relative; margin-bottom: 40px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+
+        .timeline-dot {
+            position: absolute; left: -60px; top: 5px;
+            width: 20px; height: 20px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            border: 3px solid var(--bg-medium);
+        }
+        
+        .timeline-date { font-weight: 600; color: var(--accent-color); margin-bottom: 5px; }
+        .timeline-title { font-size: 1.4em; color: var(--text-light); margin-bottom: 5px; }
+        .timeline-company { color: var(--text-muted); margin-bottom: 15px; }
+        .timeline-content ul { list-style: none; }
+        .timeline-content li { padding-left: 20px; position: relative; margin-bottom: 10px; }
+        .timeline-content li::before { content: '✓'; position: absolute; left: 0; color: var(--primary-color); }
+
+        /* NEW: Achievement Badge Styling */
+        .achievement-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #8b5cf6, #06b6d4);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(6, 182, 212, 0.7); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .project-card h3 { color: var(--accent-color); margin-bottom: 15px; font-size: 1.6em; }
+        .project-card p { color: var(--text-muted); line-height: 1.7; }
+        .project-actions { margin-top: 25px; }
+
+        /* NEW: Skills section with logos */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .skill-item {
+            background-color: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            width: 120px;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .skill-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            background-color: var(--card-hover-bg);
+        }
+        .skill-item i {
+            font-size: 4em;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+        .skill-item:hover i {
+            color: var(--accent-color);
+        }
+        .skill-item p {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        
+        /* NEW: Certifications Section Styling */
+        .certification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            background: rgba(0,0,0,0.2);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-color);
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+        .certification-item:hover {
+            background-color: var(--card-hover-bg);
+        }
+        .certification-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+        .certification-content p {
+            color: var(--text-muted);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        .btn-secondary:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; padding: 10px 20px; }
+            .nav-links { margin-top: 10px; gap: 15px; }
+            .hero h1 { font-size: 2.5em; }
+            .section h2 { font-size: 2em; }
+            .profile-picture { width: 150px; height: 150px; }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"><canvas id="matrixCanvas"></canvas></div>
+
+    <nav class="navbar">
+        <a href="#" class="nav-logo">R JEYARAMAN</a>
+        <ul class="nav-links">
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="container">
+        <header class="hero" id="home">
+            <img src="https://i.postimg.cc/FKfwYD79/IMG-2784.jpg" alt="R Jeyaraman Profile Picture" class="profile-picture" data-aos="zoom-in">
+
+            <h1 data-aos="fade-down">R JEYARAMAN</h1>
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="100">AI & Backend Developer | Building Scalable, Intelligent Systems</p>
+            
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="200">
+                <a href="https://drive.google.com/uc?export=download&id=1X4HhRjMfu_HqmxpQxAbNNZZ2VlUkApaD" class="btn btn-primary">Download CV</a>
+                <a href="https://www.linkedin.com/in/jeyaraman-r-/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">LinkedIn</a>
+            </div>
+        </header>
+
+        <section class="section" id="experience" data-aos="fade-right">
+            <h2>💼 Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Feb 2024 - Present</div>
+                    <h3 class="timeline-title">Software Engineer Trainee</h3>
+                    <div class="timeline-company">Bootlabs - Bengaluru, Karnataka</div>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Developed a natural language interface for 40TB+ of enterprise data using FastAPI, PostgreSQL, and Generative AI with RAG.</li>
+                            <li>Improved retrieval speed by 60% through optimized vector search and strategic caching.</li>
+                            <li>Engineered a secure, event-driven document processing pipeline, reducing processing time by 70%.</li>
+                            <li>Created a conversational AI to convert natural language to optimized BigQuery SQL, reducing manual query workload by 90%.</li>
+                        </ul>
+                         <div class="achievement-badge">
+                            🏆 Employee of the Quarter (Q2 2024)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="projects" data-aos="fade-left">
+            <h2>🚀 Featured Projects</h2>
+            <div class="project-card" data-aos="zoom-in-up">
+                <h3>🤖 AI-HrFlow - Intelligent Hiring Automation</h3>
+                <p>A revolutionary AI-powered hiring workflow that transforms resume processing through advanced LLM integration and automated decision-making.</p>
+                <div class="project-actions">
+                    <a href="https://medium.com/@jeyaramanjr7/02503665f275" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Architecture</a>
+                </div>
+            </div>
+            <div class="project-card" data-aos="zoom-in-up" data-aos-delay="100">
+                <h3>📄 PDF-Parser - Advanced Document Processing</h3>
+                <p>A sophisticated modular pipeline for complex PDF processing, featuring semantic chunking and a dual storage system (FAISS for speed, BigQuery for scalability).</p>
+                <div class="project-actions">
+                    <a href="https://www.linkedin.com/posts/jeyaraman-r-_ai-pdfprocessing-dataengineering-activity-7281164854999035904-GtxI?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC9L5PoBoxQKTtlcTZzodRQEuFXWLTrEMpc" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Architecture</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="skills" data-aos="fade-right">
+            <h2>🛠️ Technical Skills</h2>
+            <div class="skills-container">
+                <div class="skill-item" data-aos="fade-up"><i class="devicon-python-plain"></i><p>Python</p></div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="50"><i class="devicon-fastapi-plain"></i><p>FastAPI</p></div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="100"><i class="devicon-postgresql-plain"></i><p>PostgreSQL</p></div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="150"><i class="devicon-googlecloud-plain"></i><p>Google Cloud</p></div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="200"><i class="devicon-docker-plain"></i><p>Docker</p></div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="250"><i class="devicon-redis-plain"></i><p>Redis</p></div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="300"><i class="devicon-git-plain"></i><p>Git</p></div>
+                <div class="skill-item" data-aos="fade-up" data-aos-delay="350"><i class="devicon-azure-plain"></i><p>Azure</p></div>
+                </div>
+        </section>
+
+        <section class="section" id="certifications" data-aos="fade-left">
+            <h2>🏆 Certifications</h2>
+            <div class="certification-item" data-aos="fade-up">
+                <div class="certification-content">
+                    <h3>Python Asyncio: High-Level API</h3>
+                    <p>Issued by Udemy</p>
+                </div>
+                <a href="https://www.udemy.com/certificate/UC-f57f9ec1-4820-4891-9a28-93ef4118ccc3/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View Certificate</a>
+            </div>
+             <div class="certification-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="certification-content">
+                    <h3>REST API (Intermediate)</h3>
+                    <p>Issued by HackerRank</p>
+                </div>
+                <a href="https://www.hackerrank.com/certificates/f0497627c77a" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View Certificate</a>
+            </div>
+        </section>
+    </div>
+    
+    <footer class="footer">
+        <p style="color: var(--text-muted);">&copy; 2024 R Jeyaraman. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Matrix background effect
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const matrix = "01AI";
+        const columns = canvas.width / 12;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(15, 15, 35, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#3b82f6';
+            ctx.font = '12px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrix.charAt(Math.floor(Math.random() * matrix.length));
+                ctx.fillText(text, i * 12, drops[i] * 12);
+                if (drops[i] * 12 > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 100);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
